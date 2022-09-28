@@ -1,74 +1,47 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
- * wildcmp - check the code for Holberton School students.
- * @s1: string
- * @s2: string
- * Return: Always 0.
+ * palind2 - obtains length of a
+ * @a: string
+ * @l: integer to count length
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-
-int wildcmp(char *s1, char *s2)
+int palind2(char *a, int l)
 {
-return (checker(s1, s2, 0, 0, -1));
+	if (*a == 0)
+		return (l - 1);
+	return (palind2(a + 1, l + 1));
 }
-
 /**
- * checker - helper
- * @s1: string
- * @s2: string
- * @a: int
- * @b: int
- * @wildUsed: int
- * Return: Always 0.
+ * palind3 - compares string vs string reverse
+ * @a: string
+ * @l: length
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-int checker(char *s1, char *s2, int a, int b, int wildUsed)
+
+int palind3(char *a, int l)
 {
-
-//printf("s1 <%c> a <%i> s2 <%c> b <%i> \n", s1[a], a, s2[b], b);
-
-if (s1[a] != '\0')
-{	
-	if (s2[b] == '\0')
+	if (*a != *(a + l))
 		return (0);
-	else if (s2[b] == '*')
-	{
-		if (s2[b + 1] == '*'){
-			//printf("Pass 1\n");
-			return (checker(s1, s2, a, b + 1, b));
-		}
-		else if (s2[b + 1] == s1[a]){
-			//printf("Pass 2\n");
-			return (checker(s1, s2, a, b + 1, b));
-		}	
-		else if (s1[a + 1] != s2[b + 1]){
-			//printf("Pass 3\n");
-			return (checker(s1, s2, a + 1, b, b));	
-		}
-		else if (s1[a + 1] == s2[b + 1]){
-			//printf("Pass 3\n");
-			return (checker(s1, s2, a + 1, b + 1, b));	
-		}
-		
-	}
-	else if ((s1[a] == s2[b]) || (s2[b] == '*' && s2[b + 1] == s1[a + 1])){
-		//printf("Pass 4\n");
-		return (checker(s1, s2, a + 1, b + 1, wildUsed));
-	}
-	else
-	{
-		if (wildUsed == -1)
-		{
-			//printf("No wild card\n");
-			return (0);
-		}
-		//printf("Back to wildcard\n");
-		return (checker(s1, s2, a, wildUsed, wildUsed));
-	}
+	else if (*a == 0)
+		return (1);
+	return (palind3(a + 1, l - 2));
 }
-if (s2[b] != '\0')
-	return 0;
+/**
+ * is_palindrome - checks if a string is a palindrome
+ * @s: string to evaluate
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int is_palindrome(char *s)
+{
+	int l;
 
-return (1);
-
+	l = palind2(s, 0);
+	return (palind3(s, l));
 }
