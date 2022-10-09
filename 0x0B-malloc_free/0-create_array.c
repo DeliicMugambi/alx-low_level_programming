@@ -1,68 +1,39 @@
 #include "main.h"
 /**
- *_strlen - count array
- *@s: array of elements
- *Return: 1
- */
-
-int _strlen(char *s)
-{
-unsigned int i;
-
-i = 0;
-while (s[i] != '\0') /*count character of string*/
-{
-i++;
-}
-
-return (i);
-}
-
-/**
- *_strcpy - copy arrays
- *@src: array of elements
- *@dest: dest array
- *Return: dest
- */
-
-char *_strcpy(char *dest, char *src)
-{
-int i = 0;
-
-while (src[i] != '\0')
-{
-dest[i] = src[i];
-i++;
-}
-dest[i] = '\0';
-
-return (dest);
-}
-
-/**
- *_strdup - array for prints a string
- *@str: array of elements
+ *create_array - array for prints a string
+ *@size: number elements array
+ *@c: char
  *Return: pointer
  */
 
-char *_strdup(char *str)
+char *create_array(unsigned int size, char c)
 {
-char *dst;
-unsigned int size;
+char *buffer;
+unsigned int position;
 
-if (str == 0)
+if (size == 0)
+{
+return (NULL);
+}
+
+/*Define values with malloc*/
+buffer = (char *) malloc(size * sizeof(c));
+
+if (buffer == 0)
 {
 return (NULL);
 }
 
-size = _strlen(str) + 1;
-
-dst = (char *) malloc(size *sizeof(char));
-
-if (dst == 0)
+else
 {
-return (NULL);
+position = 0;
+while (position < size) /*While for array*/
+{
+*(buffer + position) = c;
+position++;
 }
-_strcpy(dst, str);
-return (dst);
+
+return (buffer);
+}
+
 }
